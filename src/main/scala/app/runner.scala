@@ -8,13 +8,40 @@ import scala.io.StdIn.readLine
 object runner {
 
   def main(args: Array[String]): Unit = {
+    runProgram()
+  }
 
-    val x = guitarNeck
-    val t = tones
-    val estr = eString
+  def runProgram(): Unit = {
+    val selection = promptUser1()
+    val key = promptUser2()
 
-//    val selection = promptUser1()
+    val neck = new GuitarNeck
 
+    val modeSelected = Mode.modes(selection)
+    val tab = Mode.getNotes(modeSelected, key, neck)
+    printTab(tab)
+
+    runProgram()
+  }
+
+  def printTab(tab: Array[Array[String]]) = {
+
+    println(List("","00","01","02","03","04","05","06","07","08","09","10","11","12").mkString(" ", " |", " | "))
+//    (0 to 41).foreach(_ => print("_"))
+//    println("")
+    for (x <- tab) {
+      val t = x.mkString("|", "|", "|")
+      println(t)
+    }
+
+  }
+
+  def promptUser2(): String = {
+    println("Select a key")
+
+    val key = readLine()
+
+    key.toLowerCase
   }
 
   def promptUser1(): Int = {
